@@ -1,29 +1,28 @@
 <script>
-    import {supabase} from '$lib/supabase';
-    
-    let promise = supabase.from("countries").select();
+    import { supabase } from '$lib/supabase';
+    let promise = supabase.from('countries').select();
+    let countries = [];
+    promise.then((result) => {
+        countries = result.data;
+    });
 </script>
-
-<div class ="prose">
-<h1>Aufgaben</h1>
-
-<ul><li>anstatt eines JS objects dass auf der seite ist, möchte ich eine liste aller länder</li>
-
-<li>
-    Bei Daisy UI ein loading symbol einbinden
-
-</li>
-
-<li>
-    gib die vercel URL zum Projekt ab
-
-</li>
+ 
+<h1>Aufgaben:</h1>
+ 
+<ul>
+    {#each countries as country}
+        <li>{country.name}</li>
+    {/each}
 </ul>
-</div>
-
+ 
 {#await promise}
-    <p>Loading...</p>
-{:then result}
-  <div>{JSON.stringify(result)}</div>
 
-  {/await}
+
+<p> <span class="loading loading-spinner text-error"></span></p>
+
+{:then result}
+    <div>{JSON.stringify(result)}</div>
+{/await}
+  
+  
+  
